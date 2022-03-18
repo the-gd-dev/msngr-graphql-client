@@ -8,10 +8,10 @@ const SwitchRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/messenger" element={<Messenger />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/messenger" exact element={<Messenger />} />
+        <Route path="/sign-up" exact element={<SignUp />} />
+        <Route path="/login" exact element={<Login />} />
+        <Route path="/" exact element={<LandingPage />} />
       </Routes>
     </Router>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import CustomLink from "../components/CustomLink";
 import Logo from "../components/Logo";
-
+import config from "../config";
 const GuestLayouts = (props) => {
   return (
     <div className="container-fluid">
@@ -14,22 +14,64 @@ const GuestLayouts = (props) => {
         </div>
         <div className="right text-xl">
           <ul className="list-style-none flex space-x-4">
-            <li><CustomLink activeClassName="text-blue-500" to={'/'}>Home</CustomLink></li>
-            <li><CustomLink activeClassName="text-blue-500" to={'/login'}>Login</CustomLink></li>
-            <li><CustomLink activeClassName="text-blue-500" to={'/sign-up'}>Sign Up</CustomLink></li>
+            <li>
+              <CustomLink activeclassname="text-blue-500" to={"/"}>
+                Home
+              </CustomLink>
+            </li>
+            <li>
+              <CustomLink activeclassname="text-blue-500" to={"/login"}>
+                Login
+              </CustomLink>
+            </li>
+            <li>
+              <CustomLink activeclassname="text-blue-500" to={"/sign-up"}>
+                Sign Up
+              </CustomLink>
+            </li>
           </ul>
         </div>
       </nav>
       <main className="container mx-auto">
-        {props.children}{" "}
-        <footer className="flex flex-col mt-12 justify-center items-center">
-          <div className="text-xl text-gray-800">
+        {props.children}
+        <footer className="flex flex-col justify-center items-center mb-auto">
+          <div className="text-xl text-gray-500">
             A good developer production
           </div>
+          <div className="text-xl text-gray-400 flex space-x-4 my-4  justify-center items-center">
+            <div>
+              <img
+                className="h-8"
+                src={`${config.assetURI}/nodejs.png`}
+                alt=""
+              />
+            </div>
+            <div>
+              <img
+                className="h-10 w-10"
+                src="https://graphql.org/img/logo.svg"
+                alt=""
+              />
+            </div>
+            <div>
+              <img
+                className="h-10"
+                src={`${config.assetURI}/mongo.png`}
+                alt=""
+              />
+            </div>
+            <div>
+              <img
+                className="h-10 w-10"
+                src="https://d33wubrfki0l68.cloudfront.net/554c3b0e09cf167f0281fda839a5433f2040b349/ecfc9/img/header_logo.svg"
+                alt=""
+              />
+            </div>
+          </div>
+
           <div className="text-xl text-gray-600">
             messenger-clone &copy;2022
           </div>
-          <div className="text-xl text-gray-400">NodeJS / GraphQL / Socket</div>
         </footer>
       </main>
     </div>
