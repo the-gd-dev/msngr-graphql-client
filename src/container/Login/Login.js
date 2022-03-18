@@ -1,16 +1,43 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FormBtn from "../../components/FormBtn";
 import FormCheck from "../../components/FormCheck";
 import FormInput from "../../components/FormInput";
 import GuestLayout from "../../layouts/GuestLayout";
-
+import axios from 'axios';
+import config from "../../config";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const loginHandler = (e) => {
+  const [errors, setErrors] = useState({});
+  const navigate =  useNavigate();
+  const loginHandler = async (e) => {
     e.preventDefault();
-    
+    const graphqlQuery = `
+      mutation {
+        loginUser(userLoginInput: {email: "${email}", password: "${password}"}) {
+          token
+          _id
+          name
+          email
+          createdAt
+        }
+      }
+    `;
+    try {
+      setErrors({});
+      let { data } = await axios.post(config.apiBaseURI + "/graphql", {
+        query: graphqlQuery,
+      });
+      setTimeout(() => {
+        navigate("/messenger");
+      }, 2000);
+    } catch (error) {
+      let newErrors = error.response.data.errors[0].data;
+      setErrors(newErrors);
+    }
+
     return false;
   };
   return (
@@ -24,6 +51,7 @@ const Login = () => {
                 <FormInput
                   type="email"
                   required
+                  errors={errors.hasOwnProperty('email') ? errors.email :  []}
                   placeholder="Email Address"
                   height={50}
                   value={email}
@@ -36,6 +64,7 @@ const Login = () => {
                   height={50}
                   required
                   value={password}
+                  errors={errors.hasOwnProperty('password') ? errors.password :  []}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full h-14 text-xl  border rounded-xl mb-4 px-4"
                 />
