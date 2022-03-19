@@ -5,7 +5,7 @@ const Logo = ({height, classes}) => {
   return (
     <img
       className={classes}
-      src={config.assetURI + "/logo.svg"}
+      src={config.assetURI + "/logo.png"}
       alt="messenger-clone"
       style={{ height: height }}
     />

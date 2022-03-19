@@ -7,7 +7,7 @@ const FormInput = (props) => {
     ? fieldID(props.label)
     : fieldID(props.placeholder);
   return (
-    <div className="flex flex-col w-full  mb-4">
+    <div className="flex flex-col w-full mb-4">
       <label htmlFor={labelID}>{props.label}</label>
       <input
         id={labelID}
@@ -16,9 +16,10 @@ const FormInput = (props) => {
           height: props.height,
           width: props.width,
           fontSize: props.fontSize || 18,
+          borderRadius : props.rounded !== undefined ? props.rounded : 12
         }}
         {...props}
-        className={`w-full border rounded-xl px-4 ${props.errors && props.errors.length > 0 ? 'border border-red-400' : ''}`}
+        className={`w-full border px-4 ${props.errors && props.errors.length > 0 ? 'border border-red-400' : ''}`}
       />
       {props.errors && props.errors.length > 0 ? <div className="text-red-400">{props.errors[0]}</div> : null}
     </div>

@@ -37,45 +37,7 @@ const AuthLayout = (props) => {
       }
     })();
   }, []);
-
-  const logoutUser = () => {
-    if (window.confirm("Are you sure ?")) {
-      dispatch(deleteToken());
-      navigate("/login");
-    }
-  };
-  return (
-    <div className="container-fluid">
-      <nav className="flex justify-between items-center py-2 px-4">
-        <div className="left">
-          <div className="branding text-xl flex items-center space-x-2">
-            <Logo height={40} />
-            <div>Messenger Clone</div>
-          </div>
-        </div>
-        <div className="right text-xl">
-          <ul className="list-style-none flex space-x-4">
-            <li>
-              <CustomLink activeclassname="text-blue-500" to={"/messenger"}>
-                Home
-              </CustomLink>
-            </li>
-
-            <li>
-              <CustomLink
-                onClick={logoutUser}
-                activeclassname="text-blue-500"
-                to={"/"}
-              >
-                Logout
-              </CustomLink>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <main className="container mx-auto">{props.children}</main>
-    </div>
-  );
+  return <main className="messenger__main__view p-0 m-0">{props.children}</main>;
 };
 
 export default AuthLayout;
