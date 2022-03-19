@@ -4,19 +4,25 @@ import FormBtn from "../../components/FormBtn";
 import FormCheck from "../../components/FormCheck";
 import FormInput from "../../components/FormInput";
 import GuestLayout from "../../layouts/GuestLayout";
-import axios from 'axios';
+import axios from "axios";
 import config from "../../config";
+import { useDispatch } from "react-redux";
+import { saveToken } from "../../store/auth/actions";
+import { toast } from "react-toastify";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
-  const navigate =  useNavigate();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const loginHandler = async (e) => {
     e.preventDefault();
+    setIsLoggingIn(true);
     const graphqlQuery = `
       mutation {
-        loginUser(userLoginInput: {email: "${email}", password: "${password}"}) {
+        loginUser(userLoginInput: {email: "${email}", password: "${password}", rememberMe : ${rememberMe}}) {
           token
           _id
           name
@@ -30,14 +36,20 @@ const Login = () => {
       let { data } = await axios.post(config.apiBaseURI + "/graphql", {
         query: graphqlQuery,
       });
+      let token = data.data.loginUser.token;
+      dispatch(saveToken(token));
+      toast.success("Successfully Logged In.", {
+        position: "top-center",
+        autoClose: 2000,
+      });
       setTimeout(() => {
         navigate("/messenger");
-      }, 2000);
+      }, 2500);
     } catch (error) {
       let newErrors = error.response.data.errors[0].data;
       setErrors(newErrors);
     }
-
+    setIsLoggingIn(false);
     return false;
   };
   return (
@@ -51,7 +63,7 @@ const Login = () => {
                 <FormInput
                   type="email"
                   required
-                  errors={errors.hasOwnProperty('email') ? errors.email :  []}
+                  errors={errors.hasOwnProperty("email") ? errors.email : []}
                   placeholder="Email Address"
                   height={50}
                   value={email}
@@ -64,7 +76,9 @@ const Login = () => {
                   height={50}
                   required
                   value={password}
-                  errors={errors.hasOwnProperty('password') ? errors.password :  []}
+                  errors={
+                    errors.hasOwnProperty("password") ? errors.password : []
+                  }
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full h-14 text-xl  border rounded-xl mb-4 px-4"
                 />
@@ -78,7 +92,7 @@ const Login = () => {
                     Forgot password
                   </a>
                 </div>
-                <FormBtn btntext="Login" btntype="primary" height={50} />
+                <FormBtn disabled={isLoggingIn} btntext="Login" btntype="primary" height={50} />
               </form>
             </div>
           </div>

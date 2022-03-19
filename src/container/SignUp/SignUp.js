@@ -14,12 +14,21 @@ const SignUp = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isRegisterd, setIsRegisterd] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const signupHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const graphqlQuery = `
       mutation {
-        createUser(userRegInput: {name: "${name}",email: "${email}", password: "${password}", confirmPassword: "${confirmPassword}"}) {
+        createUser(userRegInput: 
+          { 
+            name: "${name}",
+            email: "${email}", 
+            password: "${password}", 
+            confirmPassword: "${confirmPassword}"
+          }) 
+        {
           _id
           name
           email
@@ -40,7 +49,7 @@ const SignUp = (props) => {
       let newErrors = error.response.data.errors[0].data;
       setErrors(newErrors);
     }
-
+    setLoading(false);
     return false;
   };
   return (
@@ -64,7 +73,7 @@ const SignUp = (props) => {
               <form onSubmit={signupHandler} className="w-full ">
                 <h2 className="text-2xl mb-6 mt-2">Register</h2>
                 <FormInput
-                  errors={errors || errors.name || []}
+                  errors={errors.name || []}
                   required
                   type="text"
                   placeholder="Name"
@@ -74,7 +83,7 @@ const SignUp = (props) => {
                   className="w-full h-14 text-xl  border rounded-xl mb-4 px-4"
                 />
                 <FormInput
-                  errors={errors || errors.email || []}
+                  errors={errors.email || []}
                   required
                   type="email"
                   placeholder="Email Address"
@@ -85,7 +94,7 @@ const SignUp = (props) => {
                 />
                 <FormInput
                   required
-                  errors={errors || errors.password || []}
+                  errors={errors.password || []}
                   type="password"
                   placeholder="Password"
                   height={50}
@@ -95,7 +104,7 @@ const SignUp = (props) => {
                 />
                 <FormInput
                   required
-                  errors={errors || errors.confirmPassword || []}
+                  errors={errors.confirmPassword || []}
                   type="password"
                   placeholder="Confirm Password"
                   height={50}
@@ -103,7 +112,12 @@ const SignUp = (props) => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full h-14 text-xl  border rounded-xl mb-4 px-4"
                 />
-                <FormBtn btntext="Sign Up" btntype="primary" height={50} />
+                <FormBtn
+                  disabled={loading}
+                  btntext="Sign Up"
+                  btntype="primary"
+                  height={50}
+                />
               </form>
             </div>
           </div>

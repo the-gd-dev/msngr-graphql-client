@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CustomLink from "../components/CustomLink";
 import Logo from "../components/Logo";
 import config from "../config";
 const GuestLayouts = (props) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    let hasToken = window.localStorage.getItem("token");
+    if (hasToken) {
+      navigate("/messenger");
+    }
+  }, []);
+
   return (
     <div className="container-fluid">
       <nav className="flex justify-between items-center py-2 px-4">
@@ -41,28 +50,28 @@ const GuestLayouts = (props) => {
           <div className="text-xl text-gray-400 flex space-x-4 my-4  justify-center items-center">
             <div>
               <img
-                className="h-8"
+                className="h-6"
                 src={`${config.assetURI}/nodejs.png`}
                 alt=""
               />
             </div>
             <div>
               <img
-                className="h-10 w-10"
+                className="h-6 w-6"
                 src="https://graphql.org/img/logo.svg"
                 alt=""
               />
             </div>
             <div>
               <img
-                className="h-10"
+                className="h-6"
                 src={`${config.assetURI}/mongo.png`}
                 alt=""
               />
             </div>
             <div>
               <img
-                className="h-10 w-10"
+                className="h-6 w-6"
                 src="https://d33wubrfki0l68.cloudfront.net/554c3b0e09cf167f0281fda839a5433f2040b349/ecfc9/img/header_logo.svg"
                 alt=""
               />
