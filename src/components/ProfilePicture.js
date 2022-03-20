@@ -15,7 +15,7 @@ const ProfilePicture = (props) => {
       {...props}
       className={`${_size[size]} ${customclassnames} overflow-hidden rounded-full`}
     >
-      <img src={url} alt="" />
+      <img src={url}  className="w-full h-full object-cover" />
     </div>
   );
 };

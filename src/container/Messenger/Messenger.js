@@ -3,7 +3,7 @@ import ProfilePicture from "../../components/ProfilePicture";
 import AuthLayout from "../../layouts/AuthLayout";
 import Chats from "./Chats/Chats";
 import MessengerConvos from "./MessengerConvos/MessengerConvos";
-import './Messenger.css'
+import "./Messenger.css";
 const Messenger = () => {
   const [toggleInformation, setToggleInformation] = useState(false);
   const [messageOptionState, setMessageOptionState] = useState(0);
@@ -15,6 +15,7 @@ const Messenger = () => {
       setMessageOptionState(msgId);
     }
   };
+  let profilePictureUrl = `https://picsum.photos/id/1011/200/300`;
   return (
     <AuthLayout>
       <div className="flex w-full h-full">
@@ -38,11 +39,11 @@ const Messenger = () => {
                 <ProfilePicture
                   size={"xxl"}
                   customclassnames={"border-2"}
-                  url={`https://scontent.fslv1-2.fna.fbcdn.net/v/t39.30808-1/270376103_4628975630554173_6521574108613384626_n.jpg?stp=dst-jpg_p100x100&_nc_cat=100&ccb=1-5&_nc_sid=7206a8&_nc_ohc=9BPLwQ2XcC4AX_sxm8O&_nc_ad=z-m&_nc_cid=2034&_nc_ht=scontent.fslv1-2.fna&oh=00_AT_jufvCOEMBYZGm185bN-ap8buqFjVgMv1Me8_gCz6k8A&oe=623A2A75`}
+                  url={profilePictureUrl}
                 />
               </div>
               <div className="text-2xl font-semibold convo__user__name mt-2 ">
-                Kanika Sharma
+                Rebbecca Larson
               </div>
               <div className="flex flex-col w-full mt-4 pt-4 border-t">
                 <div className="m-auto w-3/4">

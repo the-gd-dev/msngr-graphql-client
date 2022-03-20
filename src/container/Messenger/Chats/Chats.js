@@ -17,7 +17,7 @@ const Chats = (props) => {
       <div
         className="chat__messages__container px-4 flex flex-col items-baseline"
         style={{
-          height: 725,
+          height: 800,
           overflowY: "auto",
         }}
       >
@@ -90,15 +90,15 @@ const Chats = (props) => {
       {/* Reply Section */}
 
       {/* CHat Footer */}
-      <div className="chat__messages__footer">
-        <div className="chat__messages__reply__footer flex flex-col h-full w-full py-2 px-4 border-t border-gray-300">
+      <div className="chat__messages__footer relative">
+        {/* <div className="absolute chat__messages__reply__footer flex flex-col h-full w-full py-2 px-4 -top-20 z-15 border-t border-gray-300">
           <div className="text-sm text-gray-800">
             Replying to <span className="font-semibold">Kanika</span>
           </div>
           <div className="message__to_reply text-sm text-gray-600">
             Tuitions hoti h yr... Abhi 26 tk to
           </div>
-        </div>
+        </div> */}
         <div className="flex space-x-2 h-full w-full items-center px-4">
           <div className="flex">
             <CustomBtn>

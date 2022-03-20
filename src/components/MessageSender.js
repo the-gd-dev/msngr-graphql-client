@@ -40,7 +40,7 @@ const MessageSender = (props) => {
           </CustomBtn>
         </div>
         <div className="msg-content bg-blue-500 text-white py-2 px-4 rounded-full">
-          Tuitions hoti h yr... Abhi 26 tk to
+          Lorem ipsum, dolor sit.
         </div>
         {props.optionState === props.messageId ? (
           <OptionsBox

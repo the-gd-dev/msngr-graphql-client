@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Conversations from "../../../components/Conversations";
+import { deleteToken } from "../../../store/auth/actions";
 
 import ConversationHeader from "./ConversationHeader";
 const MessengerConvos = (props) => {
   const [showConvoHeaderOptions, setShowConvoHeaderOptions] = useState(false);
   const [showConvoOptions, setShowConvoOptions] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const setShowConvoOptionsHandler = (convoId) => {
     setShowConvoHeaderOptions(false);
     if (showConvoOptions === convoId) {
@@ -22,7 +27,10 @@ const MessengerConvos = (props) => {
       _id: 1,
       title: "Log Out",
       clickHandler: () => {
-        console.log("logout clicked-------------");
+        if (window.confirm("Are you sure ?")) {
+          dispatch(deleteToken());
+          navigate("/login");
+        }
       },
     },
   ];
@@ -34,7 +42,7 @@ const MessengerConvos = (props) => {
         showuseroptions={showConvoHeaderOptions}
         useroptions={conversationHeaderItems}
       />
-      
+
       <div
         className="conversations___wrapper w-full relative z-15"
         style={{
