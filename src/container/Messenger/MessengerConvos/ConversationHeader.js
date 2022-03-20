@@ -7,7 +7,11 @@ const ConversationHeader = (props) => {
   const { showuseroptions, useroptions } = props;
   const [searchInputFocused, setSearchInputFocused] = useState(false);
   const [searchResultData, setSearchResultData] = useState([]);
-
+  const newPersonHandler = (data) => {
+    props.newConvoSelected(data);
+    setSearchResultData([]);
+    setSearchInputFocused(false);
+  };
   return (
     <div className="conversations___header relative">
       <div className="conversations___header__user">
@@ -35,7 +39,11 @@ const ConversationHeader = (props) => {
       {searchInputFocused || searchResultData.length > 0 ? (
         <div className="z-20 absolute bg-white w-full mc__search__results py-4">
           {searchResultData.map((data) => (
-            <SearchResult key={data._id} user={data} />
+            <SearchResult
+              newPersonSelected={() => newPersonHandler(data)}
+              key={data._id}
+              user={data}
+            />
           ))}
         </div>
       ) : null}

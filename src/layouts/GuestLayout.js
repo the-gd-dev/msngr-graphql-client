@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomLink from "../components/CustomLink";
 import Logo from "../components/Logo";
+import TailwindBrand from "../components/TailwindBrand";
 import config from "../config";
 const GuestLayouts = (props) => {
   const navigate = useNavigate();
@@ -50,6 +51,16 @@ const GuestLayouts = (props) => {
           <div className="text-xl text-gray-400 flex space-x-4 my-4  justify-center items-center">
             <div>
               <img
+                className="h-8 w-8"
+                src="https://d33wubrfki0l68.cloudfront.net/554c3b0e09cf167f0281fda839a5433f2040b349/ecfc9/img/header_logo.svg"
+                alt=""
+              />
+            </div>
+            <div className="mt-2">
+              <TailwindBrand />
+            </div>
+            <div>
+              <img
                 className="h-6"
                 src={`${config.assetURI}/nodejs.png`}
                 alt=""
@@ -66,13 +77,6 @@ const GuestLayouts = (props) => {
               <img
                 className="h-6"
                 src={`${config.assetURI}/mongo.png`}
-                alt=""
-              />
-            </div>
-            <div>
-              <img
-                className="h-6 w-6"
-                src="https://d33wubrfki0l68.cloudfront.net/554c3b0e09cf167f0281fda839a5433f2040b349/ecfc9/img/header_logo.svg"
                 alt=""
               />
             </div>

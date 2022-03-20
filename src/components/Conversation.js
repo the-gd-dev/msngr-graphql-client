@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import humanReadTime from "../helpers/humanReadTime";
 import { CustomBtn } from "./CustomBtn";
 import OptionsBox from "./OptionsBox";
 import ProfileDetails from "./ProfileDetails";
@@ -6,6 +8,8 @@ import ProfilePicture from "./ProfilePicture";
 import { ThreeDots } from "./ThreeDots";
 
 const Conversation = (props) => {
+  const currentUser = useSelector((state) => state.auth.user);
+  let { convoData } = props;
   const conversationOptions = [
     {
       _id: 1,
@@ -22,13 +26,22 @@ const Conversation = (props) => {
       },
     },
   ];
+  let conversatingWith;
+  if (currentUser.id !== convoData.participents[0]._id) {
+    conversatingWith = convoData.participents[0];
+  } else {
+    conversatingWith = convoData.participents[1];
+  }
   let profilePictureUrl = `https://picsum.photos/id/1011/200/300`;
   return (
     <div className="z-5 hover:bg-gray-100 flex justify-between py-3 px-4 rounded-md relative cursor-pointer">
-      <ProfileDetails username={`Rebbecca Larson`} profile_picture={profilePictureUrl}>
-        <div className="text-gray-500">Lorem ipsum, dolor sit.</div>
+      <ProfileDetails
+        username={conversatingWith.name}
+        profile_picture={profilePictureUrl}
+      >
+        <div className="text-gray-500">{convoData.lastMessage.text}</div>
         <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-        <div className="text-gray-500">1 d</div>
+        <div className="text-gray-500">{humanReadTime(convoData.lastMessage.updatedAt)}</div>
       </ProfileDetails>
       <div className="single__card__ops space-x-2 items-center hidden xl:flex">
         <CustomBtn

@@ -10,10 +10,10 @@ const ChatHeader = (props) => {
       <div className="flex space-x-2 items-center py-3 rounded-md px-2">
         <ProfileDetails
           size="md"
-          username={`Rebbecca Larson`}
+          username={props.userData && props.userData.name}
           profile_picture={profilePictureUrl}
         >
-          <div className="text-gray-500 leading-tight">Active 1d ago</div>
+          {/* <div className="text-gray-500 leading-tight">Active 1d ago</div> */}
         </ProfileDetails>
       </div>
       <div className="chat__user__information">

@@ -8,6 +8,7 @@ import ConversationHeader from "./ConversationHeader";
 const MessengerConvos = (props) => {
   const [showConvoHeaderOptions, setShowConvoHeaderOptions] = useState(false);
   const [showConvoOptions, setShowConvoOptions] = useState(0);
+  const [newConversationData, setNewConversationData] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const setShowConvoOptionsHandler = (convoId) => {
@@ -22,9 +23,15 @@ const MessengerConvos = (props) => {
     setShowConvoOptions(0);
     setShowConvoHeaderOptions(!showConvoHeaderOptions);
   };
+
   const conversationHeaderItems = [
     {
       _id: 1,
+      title: "Online People",
+      clickHandler: () => {},
+    },
+    {
+      _id: 2,
       title: "Log Out",
       clickHandler: () => {
         if (window.confirm("Are you sure ?")) {
@@ -34,9 +41,15 @@ const MessengerConvos = (props) => {
       },
     },
   ];
+  const newConvoHandler = (convoUser) => {
+    setNewConversationData(convoUser);
+    props.newConversation(convoUser);
+  };
+
   return (
     <div className="conversations___container p-5">
       <ConversationHeader
+        newConvoSelected={(v) => newConvoHandler(v)}
         newMessageHandler={() => console.log("=====")}
         handleUserOptions={convoHeaderOptionHandler}
         showuseroptions={showConvoHeaderOptions}
@@ -51,6 +64,7 @@ const MessengerConvos = (props) => {
         }}
       >
         <Conversations
+          newConvo={newConversationData}
           convoOptionsState={showConvoOptions}
           convoOptionsHandler={(id) => setShowConvoOptionsHandler(id)}
         />

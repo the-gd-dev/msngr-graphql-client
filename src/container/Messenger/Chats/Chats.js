@@ -1,15 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { CustomBtn } from "../../../components/CustomBtn";
 import { CustomInput } from "../../../components/CustomInput";
 import ImageIcon from "../../../components/ImageIcon";
 import Message from "../../../components/Message";
 import ChatHeader from "./ChatHeader";
-
+import axios from "../../../axios";
 const Chats = (props) => {
+  const [newMessage, setNewMessage] = useState("");
+  const currentUser = useSelector((state) => state.auth.user);
+  const sendNewMessage = async () => {
+    if (newMessage) {
+      const graphqlQuery = `
+        mutation {
+          createMessage(messageInput : {
+            text : "${newMessage}"
+            image  : ""
+            sender : "${currentUser._id}"
+            reciever : "${props.newConversationUser._id}"
+          }){
+            _id
+            text
+            image
+            reaction
+            createdAt
+          }
+        }
+      `;
+      let { data } = await axios.post("/graphql", { query: graphqlQuery });
+    }
+  };
   return (
     <div className="messages__i__container">
       {/* CHat Header */}
       <ChatHeader
+        userData={props.newConversationUser}
         uisbState={props.toggleUserInfoState}
         uisbToggler={props.toggleUserInfo}
       />
@@ -22,7 +47,7 @@ const Chats = (props) => {
         }}
       >
         <div className="messages__wrapper mt-auto w-full">
-          <Message
+          {/* <Message
             myMessage={false}
             msgId={1}
             msgOptToggleState={props.msgOptState}
@@ -30,61 +55,7 @@ const Chats = (props) => {
               console.log(props.msgOptState);
               props.msgOptStateHandler(v);
             }}
-          />
-          <Message
-            msgId={2}
-            myMessage={true}
-            msgOptToggleState={props.msgOptState}
-            msgOptToggleStateHandler={(v) => {
-              console.log(props.msgOptState);
-              props.msgOptStateHandler(v);
-            }}
-          />
-          <Message
-            msgId={3}
-            myMessage={false}
-            msgOptToggleState={props.msgOptState}
-            msgOptToggleStateHandler={(v) => {
-              console.log(props.msgOptState);
-              props.msgOptStateHandler(v);
-            }}
-          />
-          <Message
-            msgId={4}
-            myMessage={true}
-            msgOptToggleState={props.msgOptState}
-            msgOptToggleStateHandler={(v) => {
-              console.log(props.msgOptState);
-              props.msgOptStateHandler(v);
-            }}
-          />
-          <Message
-            msgId={5}
-            myMessage={false}
-            msgOptToggleState={props.msgOptState}
-            msgOptToggleStateHandler={(v) => {
-              console.log(props.msgOptState);
-              props.msgOptStateHandler(v);
-            }}
-          />
-          <Message
-            msgId={6}
-            myMessage={false}
-            msgOptToggleState={props.msgOptState}
-            msgOptToggleStateHandler={(v) => {
-              console.log(props.msgOptState);
-              props.msgOptStateHandler(v);
-            }}
-          />
-          <Message
-            msgId={7}
-            myMessage={true}
-            msgOptToggleState={props.msgOptState}
-            msgOptToggleStateHandler={(v) => {
-              console.log(props.msgOptState);
-              props.msgOptStateHandler(v);
-            }}
-          />
+          /> */}
         </div>
       </div>
       {/* Reply Section */}
@@ -107,11 +78,20 @@ const Chats = (props) => {
           </div>
           <div className="flex w-full">
             <label className="w-full  flex w-full relative">
-              <CustomInput placeholder="Aa" customclassnames={`h-9 pl-4`} />
+              <CustomInput
+                placeholder="Aa"
+                customclassnames={`h-9 pl-4`}
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+              />
             </label>
           </div>
           <div className="flex">
-            <CustomBtn customclassnames="bg-gray-100 text-gray-400 font-semibold hover:bg-blue-500 hover:text-white  px-4 py-1">
+            <CustomBtn
+              onClick={sendNewMessage}
+              disabled={!newMessage}
+              customclassnames="disabled:bg-gray-100 disabled:text-gray-400 font-semibold bg-blue-500 text-white  px-4 py-1"
+            >
               Send
             </CustomBtn>
           </div>

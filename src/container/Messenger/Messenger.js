@@ -7,6 +7,8 @@ import "./Messenger.css";
 const Messenger = () => {
   const [toggleInformation, setToggleInformation] = useState(false);
   const [messageOptionState, setMessageOptionState] = useState(0);
+  const [newConvoUser, setNewConvoUser] = useState(null);
+
   const msgOptionToggleHandler = (msgId) => {
     console.log(msgId);
     if (messageOptionState === msgId) {
@@ -16,15 +18,21 @@ const Messenger = () => {
     }
   };
   let profilePictureUrl = `https://picsum.photos/id/1011/200/300`;
+  const newConversationHandler = (data) => {
+    setNewConvoUser(data);
+  };
   return (
     <AuthLayout>
       <div className="flex w-full h-full">
         <div className="w-1/4 h-full border-r hidden lg:inline">
-          <MessengerConvos />
+          <MessengerConvos
+            newConversation={(data) => newConversationHandler(data)}
+          />
         </div>
         <div className="w-full lg:w-3/4 h-full border-r">
           <div className="messages__o__container">
             <Chats
+              newConversationUser={newConvoUser}
               msgOptState={messageOptionState}
               msgOptStateHandler={(v) => msgOptionToggleHandler(v)}
               toggleUserInfoState={toggleInformation}
