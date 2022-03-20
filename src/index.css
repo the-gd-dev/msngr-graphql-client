@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 .mc__options__box {
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(255, 255, 255);
 }
-.option__custom:hover{
-    font-weight: 700;
+.option__custom:hover {
+  font-weight: 600;
 }
-.mc__options__box:after {
+/* .mc__options__box:after {
   content: " ";
   position: absolute;
   right: 0px;
@@ -16,4 +16,4 @@
   border-right: 12px solid transparent;
   border-left: 12px solid transparent;
   border-bottom: 12px solid rgb(240, 240, 240);
-}
+} */

@@ -3,7 +3,20 @@ import Conversations from "../../../components/Conversations";
 
 import ConversationHeader from "./ConversationHeader";
 const MessengerConvos = (props) => {
-  const [showConvoHeaderOptions, setConvoHeaderOptions] = useState(false);
+  const [showConvoHeaderOptions, setShowConvoHeaderOptions] = useState(false);
+  const [showConvoOptions, setShowConvoOptions] = useState(0);
+  const setShowConvoOptionsHandler = (convoId) => {
+    setShowConvoHeaderOptions(false);
+    if (showConvoOptions === convoId) {
+      setShowConvoOptions(0);
+    } else {
+      setShowConvoOptions(convoId);
+    }
+  };
+  const convoHeaderOptionHandler = () => {
+    setShowConvoOptions(0);
+    setShowConvoHeaderOptions(!showConvoHeaderOptions);
+  };
   const conversationHeaderItems = [
     {
       _id: 1,
@@ -15,7 +28,12 @@ const MessengerConvos = (props) => {
   ];
   return (
     <div className="conversations___container p-5">
-      <ConversationHeader showuseroptions={showConvoHeaderOptions} useroptions={conversationHeaderItems} />
+      <ConversationHeader
+        newMessageHandler={() => console.log("=====")}
+        handleUserOptions={convoHeaderOptionHandler}
+        showuseroptions={showConvoHeaderOptions}
+        useroptions={conversationHeaderItems}
+      />
       <div
         className="conversations___wrapper w-full"
         style={{
@@ -23,7 +41,10 @@ const MessengerConvos = (props) => {
           overflowY: "auto",
         }}
       >
-        <Conversations />
+        <Conversations
+          convoOptionsState={showConvoOptions}
+          convoOptionsHandler={(id) => setShowConvoOptionsHandler(id)}
+        />
       </div>
       <div className="conversations___footer"></div>
     </div>

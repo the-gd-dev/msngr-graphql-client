@@ -1,17 +1,25 @@
 import React from "react";
 import Conversation from "./Conversation";
 
-const Conversations = () => {
+const Conversations = ({ convoOptionsHandler, convoOptionsState }) => {
   return (
-    <div className="flex w-full flex-col py-6">
+    <div className="flex w-full h-full flex-col py-6">
       {/* Single Person Card */}
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
+      <Conversation
+        convoId={1}
+        optionsToggleState={convoOptionsState}
+        optionsToggleHandler={(id) => convoOptionsHandler(id)}
+      />
+      <Conversation
+        convoId={2}
+        optionsToggleState={convoOptionsState}
+        optionsToggleHandler={(id) => convoOptionsHandler(id)}
+      />
+      <Conversation
+        convoId={3}
+        optionsToggleState={convoOptionsState}
+        optionsToggleHandler={(id) => convoOptionsHandler(id)}
+      />
     </div>
   );
 };

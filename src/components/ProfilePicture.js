@@ -6,6 +6,8 @@ const ProfilePicture = ({ size, url, customclassnames }) => {
     sm: "w-9 h-9",
     md: "w-10 h-10",
     lg: "w-14 h-14",
+    xl: "w-20 h-20",
+    xxl: "w-28 h-28",
   };
   return (
     <div

@@ -1,6 +1,7 @@
 import React from "react";
 
-export const CustomBtn = ({ children, size, customclassnames }) => {
+export const CustomBtn = (props) => {
+  const { children, size, customclassnames } = props;
   let _size = {
     xsm: "w-4 h-4",
     sm: "w-9 h-9",
@@ -8,7 +9,10 @@ export const CustomBtn = ({ children, size, customclassnames }) => {
     lg: "w-14 h-14",
   };
   return (
-    <button className={`${_size[size]} ${customclassnames} rounded-full flex justify-between items-center`}>
+    <button
+      {...props}
+      className={`${_size[size]} ${customclassnames} rounded-full flex justify-between items-center`}
+    >
       {children}
     </button>
   );

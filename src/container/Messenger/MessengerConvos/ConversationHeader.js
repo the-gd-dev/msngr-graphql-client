@@ -7,14 +7,17 @@ const ConversationHeader = (props) => {
   return (
     <div className="conversations___header relative">
       <div className="conversations___header__user">
-        <ConvoCurrentUser />
+        <ConvoCurrentUser
+          userOptionHandler={props.handleUserOptions}
+          newMessageHandler={props.handleNewMessage}
+        />
       </div>
       <div className="conversations___header__search__mc">
         <SearchInput />
       </div>
       {showuseroptions ? (
         <OptionsBox
-          customclassnames="top-12 right-12 w-36"
+          customclassnames="top-10 right-12 w-36"
           items={useroptions}
         />
       ) : null}

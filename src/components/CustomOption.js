@@ -4,7 +4,7 @@ const CustomOption = (props) => {
   return (
     <div
       {...props}
-      className="text-md font-semibold text-left py-1 px-4 option__custom cursor-pointer"
+      className="text-md text-left py-1 px-4 option__custom cursor-pointer"
     >
       {props.title}
     </div>

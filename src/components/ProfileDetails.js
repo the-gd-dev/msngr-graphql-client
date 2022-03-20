@@ -3,7 +3,7 @@ import ProfilePicture from "./ProfilePicture";
 
 const ProfileDetails = (props) => {
   return (
-    <div className="single__details flex space-x-2 items-center">
+    <div className={`single__details flex space-x-2 items-center`}>
       <ProfilePicture size={props.size || 'lg'} url={props.profile_picture} />
       <div className="flex flex-col">
         <div className="text-md leading-tight">{props.username}</div>

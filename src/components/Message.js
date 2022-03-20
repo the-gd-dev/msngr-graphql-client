@@ -3,15 +3,23 @@ import { MessageReceiver } from "./MessageReceiver";
 import MessageSender from "./MessageSender";
 import MessageTime from "./MessageTime";
 
-const Message = () => {
+const Message = (props) => {
   return (
     <div className="w-full">
       {/* Time of messages */}
       <MessageTime />
       {/* Receiver Msg */}
-      <MessageReceiver />
+      <MessageReceiver
+        messageId={props.msgId}
+        optionState={props.msgOptToggleState}
+        optionStateHandler={() => props.msgOptToggleStateHandler(props.msgId)}
+      />
       {/* Sender Msg */}
-      <MessageSender />
+      <MessageSender
+        messageId={props.msgId}
+        optionState={props.msgOptToggleState}
+        optionStateHandler={() => props.msgOptToggleStateHandler(props.msgId)}
+      />
     </div>
   );
 };
