@@ -25,7 +25,7 @@ export const MessageReceiver = (props) => {
   ];
   return (
     <div className="chat__single__message flex w-full justify-start my-4">
-      <div className="message flex space-x-2 items-center relative">
+      <div className="message flex space-x-2 items-center relative z-5">
         <ProfilePicture size={"sm"} url={profilePictureUrl} />
         <div className="msg-content bg-gray-100 py-2 px-4 rounded-full">
           Tuitions hoti h yr... Abhi 26 tk to
@@ -47,7 +47,7 @@ export const MessageReceiver = (props) => {
         </div>
         {props.optionState === props.messageId ? (
           <OptionsBox
-            customclassnames="top-12 right-2 w-24 "
+            customclassnames="-top-20 -right-16 w-24 "
             items={msgControlOptions}
           />
         ) : null}

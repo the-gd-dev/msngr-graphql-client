@@ -1,6 +1,7 @@
 import React from "react";
 
-const ProfilePicture = ({ size, url, customclassnames }) => {
+const ProfilePicture = (props) => {
+  const { size, url, customclassnames } = props;
   let _size = {
     xsm: "w-4 h-4",
     sm: "w-9 h-9",
@@ -11,6 +12,7 @@ const ProfilePicture = ({ size, url, customclassnames }) => {
   };
   return (
     <div
+      {...props}
       className={`${_size[size]} ${customclassnames} overflow-hidden rounded-full`}
     >
       <img src={url} alt="" />

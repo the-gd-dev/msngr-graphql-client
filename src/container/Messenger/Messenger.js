@@ -3,6 +3,7 @@ import ProfilePicture from "../../components/ProfilePicture";
 import AuthLayout from "../../layouts/AuthLayout";
 import Chats from "./Chats/Chats";
 import MessengerConvos from "./MessengerConvos/MessengerConvos";
+import './Messenger.css'
 const Messenger = () => {
   const [toggleInformation, setToggleInformation] = useState(false);
   const [messageOptionState, setMessageOptionState] = useState(0);

@@ -34,10 +34,11 @@ const MessengerConvos = (props) => {
         showuseroptions={showConvoHeaderOptions}
         useroptions={conversationHeaderItems}
       />
+      
       <div
-        className="conversations___wrapper w-full"
+        className="conversations___wrapper w-full relative z-15"
         style={{
-          height: 768,
+          height: 790,
           overflowY: "auto",
         }}
       >

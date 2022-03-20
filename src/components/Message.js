@@ -8,18 +8,19 @@ const Message = (props) => {
     <div className="w-full">
       {/* Time of messages */}
       <MessageTime />
-      {/* Receiver Msg */}
-      <MessageReceiver
-        messageId={props.msgId}
-        optionState={props.msgOptToggleState}
-        optionStateHandler={() => props.msgOptToggleStateHandler(props.msgId)}
-      />
-      {/* Sender Msg */}
-      <MessageSender
-        messageId={props.msgId}
-        optionState={props.msgOptToggleState}
-        optionStateHandler={() => props.msgOptToggleStateHandler(props.msgId)}
-      />
+      {props.myMessage ? (
+        <MessageSender
+          messageId={props.msgId}
+          optionState={props.msgOptToggleState}
+          optionStateHandler={() => props.msgOptToggleStateHandler(props.msgId)}
+        />
+      ) : (
+        <MessageReceiver
+          messageId={props.msgId}
+          optionState={props.msgOptToggleState}
+          optionStateHandler={() => props.msgOptToggleStateHandler(props.msgId)}
+        />
+      )}
     </div>
   );
 };

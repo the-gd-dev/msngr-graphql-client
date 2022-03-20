@@ -44,7 +44,7 @@ const MessageSender = (props) => {
         </div>
         {props.optionState === props.messageId ? (
           <OptionsBox
-            customclassnames="top-12 left-0 w-24 "
+            customclassnames="-top-20 -left-16 w-24 "
             items={msgControlOptions}
           />
         ) : null}
