@@ -7,9 +7,11 @@ const ConversationHeader = (props) => {
   const { showuseroptions, useroptions } = props;
   const [searchInputFocused, setSearchInputFocused] = useState(false);
   const [searchResultData, setSearchResultData] = useState([]);
+  const [isUserSelected, setIsUserSelected] = useState(false);
   const newPersonHandler = (data) => {
     props.newConvoSelected(data);
     setSearchResultData([]);
+    setIsUserSelected(!isUserSelected);
     setSearchInputFocused(false);
   };
   return (
@@ -22,6 +24,7 @@ const ConversationHeader = (props) => {
       </div>
       <div className="conversations___header__search__mc relative">
         <SearchInput
+          clearSearchInput={isUserSelected}
           searchResults={(v) => {
             setSearchResultData(v);
           }}

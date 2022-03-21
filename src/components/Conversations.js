@@ -26,7 +26,7 @@ const Conversations = (props) => {
       setConversations(data.data.getConversations);
     })();
   }, []);
-
+  
   let { convoOptionsHandler, convoOptionsState, newConvo } = props;
   return (
     <div className="flex w-full h-full flex-col py-6">
@@ -41,6 +41,7 @@ const Conversations = (props) => {
       ) : null}
       {conversations.map((convo) => (
         <Conversation
+          onSelectConvo={() => props.newConvoSelected(convo)}
           key={convo._id}
           convoId={convo._id}
           convoData={convo}

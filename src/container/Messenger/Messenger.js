@@ -10,7 +10,6 @@ const Messenger = () => {
   const [newConvoUser, setNewConvoUser] = useState(null);
 
   const msgOptionToggleHandler = (msgId) => {
-    console.log(msgId);
     if (messageOptionState === msgId) {
       setMessageOptionState(0);
     } else {

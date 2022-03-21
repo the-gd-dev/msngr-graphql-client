@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import humanReadTime from "../helpers/humanReadTime";
 import { CustomBtn } from "./CustomBtn";
@@ -9,6 +9,7 @@ import { ThreeDots } from "./ThreeDots";
 
 const Conversation = (props) => {
   const currentUser = useSelector((state) => state.auth.user);
+  const [selectBuddy, setSelectBuddy] = useState("");
   let { convoData } = props;
   const conversationOptions = [
     {
@@ -26,22 +27,34 @@ const Conversation = (props) => {
       },
     },
   ];
-  let conversatingWith;
-  if (currentUser.id !== convoData.participents[0]._id) {
-    conversatingWith = convoData.participents[0];
-  } else {
-    conversatingWith = convoData.participents[1];
-  }
+  let conversatingWith =
+    currentUser.id !== convoData.participents[0]._id
+      ? convoData.participents[0]
+      : convoData.participents[1];
+
+  const selectBuddyConversation = (buddy) => {
+    props.onSelectConvo();
+    setSelectBuddy(buddy);
+  };
   let profilePictureUrl = `https://picsum.photos/id/1011/200/300`;
   return (
-    <div className="z-5 hover:bg-gray-100 flex justify-between py-3 px-4 rounded-md relative cursor-pointer">
+    <div
+      onClick={() => selectBuddyConversation(conversatingWith)}
+      className={`z-5 ${
+        selectBuddy._id === conversatingWith._id.toString()
+          ? "bg-gray-100"
+          : "hover:bg-gray-100"
+      } flex justify-between py-3 px-4 rounded-md relative cursor-pointer`}
+    >
       <ProfileDetails
         username={conversatingWith.name}
         profile_picture={profilePictureUrl}
       >
         <div className="text-gray-500">{convoData.lastMessage.text}</div>
         <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-        <div className="text-gray-500">{humanReadTime(convoData.lastMessage.updatedAt)}</div>
+        <div className="text-gray-500">
+          {humanReadTime(convoData.lastMessage.updatedAt)}
+        </div>
       </ProfileDetails>
       <div className="single__card__ops space-x-2 items-center hidden xl:flex">
         <CustomBtn

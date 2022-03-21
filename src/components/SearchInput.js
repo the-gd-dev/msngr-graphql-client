@@ -6,6 +6,11 @@ import { SearchIcon } from "./SearchIcon";
 import axios from "../axios";
 const SearchInput = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { clearSearchInput } = props;
+  useEffect(() => {
+    setSearchQuery("");
+  }, [clearSearchInput]);
+
   useEffect(() => {
     if (searchQuery) {
       (async function () {
@@ -36,6 +41,7 @@ const SearchInput = (props) => {
       props.searchResults([]);
     }
   }, [searchQuery]);
+
   const backHandler = () => {
     setSearchQuery("");
     props.isInputBlurHandler();

@@ -42,10 +42,12 @@ const MessengerConvos = (props) => {
     },
   ];
   const newConvoHandler = (convoUser) => {
-    setNewConversationData(convoUser);
+    if (!convoUser.participents) {
+      setNewConversationData(convoUser);
+    }
     props.newConversation(convoUser);
   };
-
+  const buddyContainerMaxH = window.outerHeight - 250;
   return (
     <div className="conversations___container p-5">
       <ConversationHeader
@@ -59,11 +61,12 @@ const MessengerConvos = (props) => {
       <div
         className="conversations___wrapper w-full relative z-15"
         style={{
-          height: 790,
+          height: buddyContainerMaxH,
           overflowY: "auto",
         }}
       >
         <Conversations
+          newConvoSelected={(v) => newConvoHandler(v)}
           newConvo={newConversationData}
           convoOptionsState={showConvoOptions}
           convoOptionsHandler={(id) => setShowConvoOptionsHandler(id)}
