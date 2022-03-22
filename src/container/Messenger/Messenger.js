@@ -8,7 +8,7 @@ const Messenger = () => {
   const [toggleInformation, setToggleInformation] = useState(false);
   const [messageOptionState, setMessageOptionState] = useState(0);
   const [newConvoUser, setNewConvoUser] = useState(null);
-
+  const [newMessageSent, setNewMessageSent] = useState(false);
   const msgOptionToggleHandler = (msgId) => {
     if (messageOptionState === msgId) {
       setMessageOptionState(0);
@@ -25,12 +25,14 @@ const Messenger = () => {
       <div className="flex w-full h-full">
         <div className="w-1/4 h-full border-r hidden lg:inline">
           <MessengerConvos
+            loadConversation={newMessageSent}
             newConversation={(data) => newConversationHandler(data)}
           />
         </div>
         <div className="w-full lg:w-3/4 h-full border-r">
           <div className="messages__o__container">
             <Chats
+              isMessageSent={() => setNewMessageSent(!newMessageSent)}
               newConversationUser={newConvoUser}
               msgOptState={messageOptionState}
               msgOptStateHandler={(v) => msgOptionToggleHandler(v)}

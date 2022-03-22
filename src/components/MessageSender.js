@@ -5,6 +5,7 @@ import ReplyIcon from "./ReplyIcon";
 import ThreeDotsV from "./ThreeDotsV";
 
 const MessageSender = (props) => {
+  const { message } = props;
   const msgControlOptions = [
     {
       _id: 1,
@@ -40,7 +41,7 @@ const MessageSender = (props) => {
           </CustomBtn>
         </div>
         <div className="msg-content bg-blue-500 text-white py-2 px-4 rounded-full">
-          Lorem ipsum, dolor sit.
+          {message.text}
         </div>
         {props.optionState === props.messageId ? (
           <OptionsBox

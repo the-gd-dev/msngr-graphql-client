@@ -31,6 +31,7 @@ const Chats = (props) => {
         }
       `;
       let { data } = await axios.post("/graphql", { query: graphqlQuery });
+      props.isMessageSent();
     }
   };
 
@@ -85,7 +86,7 @@ const Chats = (props) => {
         <div className="messages__wrapper mt-auto w-full">
           {messages.map((msg) => (
             <Message
-              myMessage={msg.sender._id === currentUser._id}
+              myMessage={msg.senderId._id === currentUser._id}
               key={msg._id}
               msgData={msg}
               msgOptToggleState={props.msgOptState}

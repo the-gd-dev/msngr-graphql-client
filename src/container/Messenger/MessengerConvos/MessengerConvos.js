@@ -1,14 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Conversations from "../../../components/Conversations";
 import { deleteToken } from "../../../store/auth/actions";
-
+import axios from "../../../axios";
 import ConversationHeader from "./ConversationHeader";
 const MessengerConvos = (props) => {
   const [showConvoHeaderOptions, setShowConvoHeaderOptions] = useState(false);
   const [showConvoOptions, setShowConvoOptions] = useState(0);
   const [newConversationData, setNewConversationData] = useState(null);
+  const [conversations, setConversations] = useState([]);
+  const { loadConversation } = props;
+
+  const getConversations = async () => {
+    let graphqlQuery = `{
+      getConversations {
+        _id
+        participents {
+          _id
+          name
+          profilePicture
+        }
+        lastMessage  {
+          text
+          image
+          updatedAt
+        }
+      }
+    }
+  `;
+    let { data } = await axios.post("/graphql", { query: graphqlQuery });
+    setConversations(data.data.getConversations);
+  };
+
+  useEffect(() => {
+    setNewConversationData(null);
+    (async function(){
+      await getConversations();
+    })()
+  }, [loadConversation]);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const setShowConvoOptionsHandler = (convoId) => {
@@ -66,6 +97,7 @@ const MessengerConvos = (props) => {
         }}
       >
         <Conversations
+          conversations={conversations}
           newConvoSelected={(v) => newConvoHandler(v)}
           newConvo={newConversationData}
           convoOptionsState={showConvoOptions}

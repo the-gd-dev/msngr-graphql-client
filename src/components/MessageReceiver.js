@@ -23,12 +23,13 @@ export const MessageReceiver = (props) => {
       },
     },
   ];
+  const { message } = props;
   return (
     <div className="chat__single__message flex w-full justify-start my-4">
       <div className="message flex space-x-2 items-center relative z-5">
         <ProfilePicture size={"sm"} url={profilePictureUrl} />
         <div className="msg-content bg-gray-100 py-2 px-4 rounded-full">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          {message.text}
         </div>
         <div className="__msg__options flex space-x-1">
           <CustomBtn

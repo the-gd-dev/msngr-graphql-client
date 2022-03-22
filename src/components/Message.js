@@ -11,6 +11,7 @@ const Message = (props) => {
       <MessageTime />
       {props.myMessage ? (
         <MessageSender
+          message={msgData}
           messageId={msgData._id}
           optionState={msgOptToggleState}
           optionStateHandler={() => msgOptToggleStateHandler(msgData._id)}
@@ -18,6 +19,7 @@ const Message = (props) => {
       ) : (
         <MessageReceiver
           messageId={props.id}
+          message={msgData}
           optionState={msgOptToggleState}
           optionStateHandler={() => msgOptToggleStateHandler(msgData._id)}
         />
