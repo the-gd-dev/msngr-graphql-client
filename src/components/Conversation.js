@@ -9,7 +9,6 @@ import { ThreeDots } from "./ThreeDots";
 
 const Conversation = (props) => {
   const currentUser = useSelector((state) => state.auth.user);
-  const [selectBuddy, setSelectBuddy] = useState("");
   let { convoData } = props;
   const conversationOptions = [
     {
@@ -27,21 +26,20 @@ const Conversation = (props) => {
       },
     },
   ];
-  let conversatingWith =
-    currentUser.id !== convoData.participents[0]._id
-      ? convoData.participents[0]
-      : convoData.participents[1];
-
+  let { selectedConversation } = props;
+  console.log(selectedConversation);
+  let conversatingWith = convoData.participents.find(
+    (p) => p._id !== currentUser._id
+  );
   const selectBuddyConversation = (buddy) => {
     props.onSelectConvo();
-    setSelectBuddy(buddy);
   };
   let profilePictureUrl = `https://picsum.photos/id/1011/200/300`;
   return (
     <div
       onClick={() => selectBuddyConversation(conversatingWith)}
       className={`z-5 ${
-        selectBuddy._id === conversatingWith._id.toString()
+        selectedConversation && selectedConversation._id === convoData._id
           ? "bg-gray-100"
           : "hover:bg-gray-100"
       } flex justify-between py-3 px-4 rounded-md relative cursor-pointer`}

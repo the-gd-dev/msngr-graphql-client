@@ -38,10 +38,10 @@ const Chats = (props) => {
   useEffect(() => {
     if (newConversationUser != null) {
       if (newConversationUser.participents) {
-        let conversatingWith =
-          currentUser.id !== newConversationUser.participents[0]._id
-            ? newConversationUser.participents[0]
-            : newConversationUser.participents[1];
+        let conversatingWith = newConversationUser.participents.find(
+          (p) => p._id !== currentUser._id
+        );
+
         setChatHeaderUser(conversatingWith);
         (async function () {
           const graphqlQuery = `
@@ -95,7 +95,6 @@ const Chats = (props) => {
               }}
             />
           ))}
-          
         </div>
       </div>
       {/* Reply Section */}

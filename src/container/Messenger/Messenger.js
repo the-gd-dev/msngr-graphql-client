@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfilePicture from "../../components/ProfilePicture";
 import AuthLayout from "../../layouts/AuthLayout";
 import Chats from "./Chats/Chats";
 import MessengerConvos from "./MessengerConvos/MessengerConvos";
 import "./Messenger.css";
+import { useSelector } from "react-redux";
 const Messenger = () => {
   const [toggleInformation, setToggleInformation] = useState(false);
   const [messageOptionState, setMessageOptionState] = useState(0);
   const [newConvoUser, setNewConvoUser] = useState(null);
   const [newMessageSent, setNewMessageSent] = useState(false);
+  const [conversatingWith, setConversatingWith] = useState({});
+  const currentUser = useSelector((state) => state.auth.user);
+
   const msgOptionToggleHandler = (msgId) => {
     if (messageOptionState === msgId) {
       setMessageOptionState(0);
@@ -17,6 +21,14 @@ const Messenger = () => {
     }
   };
   let profilePictureUrl = `https://picsum.photos/id/1011/200/300`;
+  useEffect(() => {
+    if (newConvoUser && newConvoUser.participents) {
+      let cw = newConvoUser.participents.find((p) => p._id !== currentUser._id);
+      setConversatingWith(cw);
+    } else {
+      setConversatingWith(newConvoUser);
+    }
+  }, [newConvoUser]);
   const newConversationHandler = (data) => {
     setNewConvoUser(data);
   };
@@ -52,7 +64,7 @@ const Messenger = () => {
                 />
               </div>
               <div className="text-2xl font-semibold convo__user__name mt-2 ">
-                Rebbecca Larson
+                {conversatingWith.name}
               </div>
               <div className="flex flex-col w-full mt-4 pt-4 border-t">
                 <div className="m-auto w-3/4">
