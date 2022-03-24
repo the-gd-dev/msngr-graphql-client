@@ -27,7 +27,6 @@ const Conversation = (props) => {
     },
   ];
   let { selectedConversation } = props;
-  console.log(selectedConversation);
   let conversatingWith = convoData.participents.find(
     (p) => p._id !== currentUser._id
   );
@@ -45,8 +44,8 @@ const Conversation = (props) => {
       } flex justify-between py-3 px-4 rounded-md relative cursor-pointer`}
     >
       <ProfileDetails
-        username={conversatingWith.name}
-        profile_picture={profilePictureUrl}
+        username={conversatingWith && conversatingWith.name}
+        profile_picture={conversatingWith && conversatingWith.profilePicture}
       >
         <div className="text-gray-500">{convoData.lastMessage.text}</div>
         <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
@@ -62,7 +61,10 @@ const Conversation = (props) => {
         >
           <ThreeDots />
         </CustomBtn>
-        <ProfilePicture size="xsm" url={profilePictureUrl} />
+        <ProfilePicture
+          size="xsm"
+          url={conversatingWith && conversatingWith.profilePicture}
+        />
       </div>
       {props.optionsToggleState === props.convoId ? (
         <OptionsBox

@@ -24,19 +24,21 @@ const Conversations = (props) => {
           optionsToggleHandler={(id) => convoOptionsHandler(id)}
         />
       ) : null}
-      {conversations.map((convo) => (
-        <Conversation
-          selectedConversation={selected}
-          onSelectConvo={() => (
-            props.newConvoSelected(convo), setSelected(convo)
-          )}
-          key={convo._id}
-          convoId={convo._id}
-          convoData={convo}
-          optionsToggleState={convoOptionsState}
-          optionsToggleHandler={(id) => convoOptionsHandler(id)}
-        />
-      ))}
+      {conversations.length > 0
+        ? conversations.map((convo) => (
+            <Conversation
+              selectedConversation={selected}
+              onSelectConvo={() => (
+                props.newConvoSelected(convo), setSelected(convo)
+              )}
+              key={convo._id}
+              convoId={convo._id}
+              convoData={convo}
+              optionsToggleState={convoOptionsState}
+              optionsToggleHandler={(id) => convoOptionsHandler(id)}
+            />
+          ))
+        : null}
     </div>
   );
 };

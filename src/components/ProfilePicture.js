@@ -1,6 +1,8 @@
 import React from "react";
+import config from "../config";
 
 const ProfilePicture = (props) => {
+  let dummyUrl = config.assetURI + "default.webp";
   const { size, url, customclassnames } = props;
   let _size = {
     xsm: "w-4 h-4",
@@ -15,7 +17,7 @@ const ProfilePicture = (props) => {
       {...props}
       className={`${_size[size]} ${customclassnames} overflow-hidden rounded-full`}
     >
-      <img src={url}  className="w-full h-full object-cover" />
+      <img src={url || dummyUrl} className="w-full h-full object-cover" />
     </div>
   );
 };

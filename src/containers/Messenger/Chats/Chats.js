@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { CustomBtn } from "../../../components/CustomBtn";
 import { CustomInput } from "../../../components/CustomInput";
 import ImageIcon from "../../../components/ImageIcon";
-import Message from "../../../components/Message";
+import Message from "../../../components/Message/Message";
 import ChatHeader from "./ChatHeader";
 import axios from "../../../axios";
 const Chats = (props) => {
@@ -11,6 +11,7 @@ const Chats = (props) => {
   const [newMessage, setNewMessage] = useState("");
   const [chatHeaderUser, setChatHeaderUser] = useState({});
   const [messages, setMessages] = useState([]);
+  const messagesEndHere = useRef(null);
   const currentUser = useSelector((state) => state.auth.user);
   const sendNewMessage = async () => {
     if (newMessage) {
@@ -20,7 +21,7 @@ const Chats = (props) => {
             text : "${newMessage}"
             image  : ""
             sender : "${currentUser._id}"
-            reciever : "${newConversationUser._id}"
+            reciever : "${chatHeaderUser._id}"
           }){
             _id
             text
@@ -31,10 +32,13 @@ const Chats = (props) => {
         }
       `;
       let { data } = await axios.post("/graphql", { query: graphqlQuery });
+      setNewMessage("");
       props.isMessageSent();
     }
   };
-
+  const scrollToBottom = () => {
+    messagesEndHere.current.scrollIntoView({ behavior: "smooth" });
+  };
   useEffect(() => {
     if (newConversationUser != null) {
       if (newConversationUser.participents) {
@@ -59,7 +63,20 @@ const Chats = (props) => {
            }
          `;
           let { data } = await axios.post("/graphql", { query: graphqlQuery });
-          setMessages(data.data.getMessages);
+          // setMessages(data.data.getMessages);
+          let messages = data.data.getMessages;
+          //algo to group by date
+          let oldMessageCreateDate = "";
+          for (const msg of messages) {
+            let dateOnly = msg.createdAt.split("T")[0];
+            if (oldMessageCreateDate == dateOnly) {
+              delete msg.createdAt;
+            }
+            oldMessageCreateDate = dateOnly;
+          }
+          setMessages(messages);
+          console.log(messages);
+          scrollToBottom();
         })();
       } else {
         setChatHeaderUser(newConversationUser);
@@ -86,15 +103,13 @@ const Chats = (props) => {
         <div className="messages__wrapper mt-auto w-full">
           {messages.map((msg) => (
             <Message
-              myMessage={msg.senderId._id === currentUser._id}
+              sendingTo={chatHeaderUser}
+              isMyMessage={msg.senderId._id === currentUser._id}
               key={msg._id}
-              msgData={msg}
-              msgOptToggleState={props.msgOptState}
-              msgOptToggleStateHandler={(v) => {
-                props.msgOptStateHandler(v);
-              }}
+              message={msg}
             />
           ))}
+          <div ref={messagesEndHere}></div>
         </div>
       </div>
       {/* Reply Section */}

@@ -3,15 +3,16 @@ import ProfilePicture from "../../../components/ProfilePicture";
 import { CustomBtn } from "../../../components/CustomBtn";
 import { ThreeDots } from "../../../components/ThreeDots";
 import EditIcon from "../../../components/EditIcon";
-let profilePictureUrl = `https://picsum.photos/id/1005/200/300`;
+import { useSelector } from "react-redux";
 const ConvoCurrentUser = (props) => {
+  const loggedInUser = useSelector((state) => state.auth.user);
   return (
     <div className="flex justify-between items-center space-x-2  w-full">
       <div className="mc__title__nd__dp flex items-center space-x-2">
         <ProfilePicture
           size="md"
           customclassnames="border-2"
-          url={profilePictureUrl}
+          url={loggedInUser && loggedInUser.profilePicture}
         />
         <div className="text-2xl font-semibold">Chats</div>
       </div>

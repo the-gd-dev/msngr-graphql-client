@@ -7,20 +7,11 @@ import "./Messenger.css";
 import { useSelector } from "react-redux";
 const Messenger = () => {
   const [toggleInformation, setToggleInformation] = useState(false);
-  const [messageOptionState, setMessageOptionState] = useState(0);
   const [newConvoUser, setNewConvoUser] = useState(null);
   const [newMessageSent, setNewMessageSent] = useState(false);
   const [conversatingWith, setConversatingWith] = useState({});
   const currentUser = useSelector((state) => state.auth.user);
 
-  const msgOptionToggleHandler = (msgId) => {
-    if (messageOptionState === msgId) {
-      setMessageOptionState(0);
-    } else {
-      setMessageOptionState(msgId);
-    }
-  };
-  let profilePictureUrl = `https://picsum.photos/id/1011/200/300`;
   useEffect(() => {
     if (newConvoUser && newConvoUser.participents) {
       let cw = newConvoUser.participents.find((p) => p._id !== currentUser._id);
@@ -46,8 +37,6 @@ const Messenger = () => {
             <Chats
               isMessageSent={() => setNewMessageSent(!newMessageSent)}
               newConversationUser={newConvoUser}
-              msgOptState={messageOptionState}
-              msgOptStateHandler={(v) => msgOptionToggleHandler(v)}
               toggleUserInfoState={toggleInformation}
               toggleUserInfo={() => setToggleInformation(!toggleInformation)}
             />
@@ -60,7 +49,7 @@ const Messenger = () => {
                 <ProfilePicture
                   size={"xxl"}
                   customclassnames={"border-2"}
-                  url={profilePictureUrl}
+                  url={conversatingWith.profilePicture}
                 />
               </div>
               <div className="text-2xl font-semibold convo__user__name mt-2 ">

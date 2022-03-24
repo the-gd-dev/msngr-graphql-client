@@ -4,23 +4,23 @@ import ProfileDetails from "../../../components/ProfileDetails";
 import { ThreeDots } from "../../../components/ThreeDots";
 
 const ChatHeader = (props) => {
-  let profilePictureUrl = `https://picsum.photos/id/1011/200/300`;
+  let { userData, uisbToggler, uisbState } = props;
   return (
     <div className="chat__header shadow-md  flex w-full justify-between items-center px-4">
       <div className="flex space-x-2 items-center py-3 rounded-md px-2">
         <ProfileDetails
           size="md"
-          username={props.userData && props.userData.name}
-          profile_picture={profilePictureUrl}
+          username={userData && userData.name}
+          profile_picture={userData && userData.profilePicture}
         >
           {/* <div className="text-gray-500 leading-tight">Active 1d ago</div> */}
         </ProfileDetails>
       </div>
       <div className="chat__user__information">
         <CustomBtn
-          onClick={props.uisbToggler}
+          onClick={uisbToggler}
           customclassnames={
-            props.uisbState
+            uisbState
               ? " bg-blue-600 text-white"
               : "hover:bg-gray-100 text-blue-600"
           }
