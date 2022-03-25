@@ -20,6 +20,7 @@ const Messenger = () => {
       setConversatingWith(newConvoUser);
     }
   }, [newConvoUser]);
+
   const newConversationHandler = (data) => {
     setNewConvoUser(data);
   };
@@ -49,11 +50,11 @@ const Messenger = () => {
                 <ProfilePicture
                   size={"xxl"}
                   customclassnames={"border-2"}
-                  url={conversatingWith.profilePicture}
+                  url={conversatingWith && conversatingWith.profilePicture}
                 />
               </div>
               <div className="text-2xl font-semibold convo__user__name mt-2 ">
-                {conversatingWith.name}
+                {conversatingWith && conversatingWith.name}
               </div>
               <div className="flex flex-col w-full mt-4 pt-4 border-t">
                 <div className="m-auto w-3/4">

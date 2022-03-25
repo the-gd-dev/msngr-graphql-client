@@ -27,13 +27,11 @@ const AuthLayout = (props) => {
         dispatch(saveUser(user));
       } catch (error) {
         toast.error("User Authentication Failed. Logging out.", {
-          position: "top-center",
+          position: "top-right",
           autoClose: 3000,
         });
         dispatch(deleteToken());
-        setTimeout(() => {
-          navigate("/login");
-        }, 2500);
+        navigate("/login");
       }
     })();
   }, []);

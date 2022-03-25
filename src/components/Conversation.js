@@ -9,27 +9,26 @@ import { ThreeDots } from "./ThreeDots";
 
 const Conversation = (props) => {
   const currentUser = useSelector((state) => state.auth.user);
-  let { convoData } = props;
+  let { convoData, markAsReadHandler, deleteHandler } = props;
   const conversationOptions = [
     {
       _id: 1,
       title: "Mark as read",
-      clickHandler: () => {
-        console.log("Mark as read-------------");
-      },
+      clickHandler: markAsReadHandler
     },
     {
       _id: 2,
       title: "Delete Chat",
-      clickHandler: () => {
-        console.log("Delete Chat-------------");
-      },
-    },
+      clickHandler: deleteHandler
+    }
   ];
   let { selectedConversation } = props;
-  let conversatingWith = convoData.participents.find(
-    (p) => p._id !== currentUser._id
-  );
+  let conversatingWith;
+  if (currentUser) {
+    conversatingWith = convoData.participents.find(
+      (p) => p._id !== currentUser._id
+    );
+  }
   const selectBuddyConversation = (buddy) => {
     props.onSelectConvo();
   };

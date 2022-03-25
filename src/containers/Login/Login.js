@@ -39,12 +39,10 @@ const Login = () => {
       let token = data.data.loginUser.token;
       dispatch(saveToken(token));
       toast.success("Successfully Logged In.", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 2000,
       });
-      setTimeout(() => {
-        navigate("/messenger");
-      }, 2500);
+      navigate("/messenger");
     } catch (error) {
       let newErrors = error.response.data.errors[0].data;
       setErrors(newErrors);

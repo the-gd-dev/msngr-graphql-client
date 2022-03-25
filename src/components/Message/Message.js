@@ -7,7 +7,13 @@ import TrashIcon from "../TrashIcon";
 import MessageTime from "./MessageTime";
 
 const Message = (props) => {
-  const { message, isMyMessage, sendingTo } = props;
+  const {
+    message,
+    isMyMessage,
+    sendingTo,
+    messageDeleteHandler,
+    messageReplyHandler,
+  } = props;
   return (
     <div className="w-full">
       {/* Time of messages */}
@@ -36,6 +42,7 @@ const Message = (props) => {
             ) : null}
             <div className="__msg__options flex">
               <CustomBtn
+                onClick={messageReplyHandler}
                 customclassnames="hover:bg-gray-100 text-gray-600"
                 size="sm"
               >
@@ -43,6 +50,7 @@ const Message = (props) => {
               </CustomBtn>
               {isMyMessage ? (
                 <CustomBtn
+                  onClick={messageDeleteHandler}
                   customclassnames="hover:bg-gray-100 text-gray-600"
                   size="sm"
                 >

@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import Conversation from "./Conversation";
 import NewConversation from "./NewConversation";
-import axios from "../axios";
 const Conversations = (props) => {
-  const [selected, setSelected] = useState(null);
-
-  let { conversations, convoOptionsHandler, convoOptionsState, newConvo } =
-    props;
+  let {
+    conversations,
+    convoOptionsHandler,
+    convoOptionsState,
+    newConvo,
+    selected,
+  } = props;
   useEffect(() => {
     if (conversations.length > 0) {
-      setSelected(conversations[0]);
       props.newConvoSelected(conversations[0]);
     }
   }, [conversations]);
+  
   return (
     <div className="flex w-full h-full flex-col py-6">
       {/* Single Person Card */}
@@ -27,10 +31,10 @@ const Conversations = (props) => {
       {conversations.length > 0
         ? conversations.map((convo) => (
             <Conversation
+              markAsReadHandler={() => props.readConvo(convo._id)}
+              deleteHandler={() => props.deleteConvo(convo._id)}
               selectedConversation={selected}
-              onSelectConvo={() => (
-                props.newConvoSelected(convo), setSelected(convo)
-              )}
+              onSelectConvo={() => props.newConvoSelected(convo)}
               key={convo._id}
               convoId={convo._id}
               convoData={convo}
