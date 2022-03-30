@@ -26,7 +26,9 @@ const Chats = (props) => {
             image  : ""
             sender : "${currentUser._id}"
             reciever : "${chatHeaderUser._id}"
-            replyingMsg : ${replyToMessage ? '"'+replyToMessage._id+'"' : ""}
+            ${
+              replyToMessage ? 'replyingMsg : "' + replyToMessage._id + '"' : ""
+            }
           }){
             _id
             text
@@ -43,6 +45,7 @@ const Chats = (props) => {
       `;
       let { data } = await axios.post("/graphql", { query: graphqlQuery });
       setNewMessage("");
+      setReplyToMessage(null);
       props.isMessageSent();
     }
   };
@@ -65,6 +68,11 @@ const Chats = (props) => {
                senderId {
                  _id
                }
+               replyToMessage {
+                _id
+                text
+                image
+              }
                text
                image
                reaction
@@ -90,6 +98,8 @@ const Chats = (props) => {
       } else {
         setChatHeaderUser(newConversationUser);
       }
+    } else {
+      setMessages([]);
     }
   }, [newConversationUser, currentUser]);
   useEffect(() => {

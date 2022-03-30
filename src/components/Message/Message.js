@@ -31,13 +31,18 @@ const Message = (props) => {
             ) : null}
             {!isMyMessage ? (
               <div
-                className={`msg-content ${
-                  isMyMessage
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-100 text-gray-800"
-                }  py-2 px-4 rounded-full`}
+                className={`msg-content bg-blue-100 rounded-full relative ${
+                  message.replyToMessage ? "" : ""
+                }`}
               >
-                {message.text}
+                {message.replyToMessage ? (
+                  <div className="text-center py-1 px-10">
+                    {message.replyToMessage.text}
+                  </div>
+                ) : null}
+                <div className="bg-gray-100 text-gray-800 py-2 px-4 w-full  rounded-full">
+                  {message.text}
+                </div>
               </div>
             ) : null}
             <div className="__msg__options flex">
@@ -60,10 +65,19 @@ const Message = (props) => {
             </div>
             {isMyMessage ? (
               <div
-                className={`msg-content bg-blue-500 text-white py-2 px-4 rounded-full`}
-              >
+              className={`msg-content bg-gray-100 rounded-full relative ${
+                message.replyToMessage ? "" : ""
+              }`}
+            >
+              {message.replyToMessage ? (
+                <div className="text-center py-1 px-10">
+                  {message.replyToMessage.text}
+                </div>
+              ) : null}
+              <div className="bg-blue-500 text-white py-2 px-4 w-full  rounded-full">
                 {message.text}
               </div>
+            </div>
             ) : null}
           </div>
           <MessageTime

@@ -12,11 +12,12 @@ const Conversations = (props) => {
     selected,
   } = props;
   useEffect(() => {
+    props.newConvoSelected(null);
     if (conversations.length > 0) {
       props.newConvoSelected(conversations[0]);
     }
   }, [conversations]);
-  
+
   return (
     <div className="flex w-full h-full flex-col py-6">
       {/* Single Person Card */}

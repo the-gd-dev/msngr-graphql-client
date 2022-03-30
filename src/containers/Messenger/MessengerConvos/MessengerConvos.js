@@ -48,16 +48,19 @@ const MessengerConvos = (props) => {
     if (isConfirmed) {
       const graphqlQuery = `
         mutation {
-          deleteConversations (conversationId : ${convoId}){
+          deleteConversations (conversationId : "${convoId}"){
             _id
-            text
-            image
-            reaction
-            createdAt
           }
         }
       `;
       let { data } = await axios.post("/graphql", { query: graphqlQuery });
+      let vanishedId = data?.data?.deleteConversations?._id;
+      if (vanishedId) {
+        let updatedConversations = conversations.filter(
+          (c) => c._id !== vanishedId
+        );
+        setConversations(updatedConversations);
+      }
     } else {
       setShowConvoOptions(0);
     }
@@ -117,22 +120,24 @@ const MessengerConvos = (props) => {
     },
   ];
   const newConvoHandler = (convoUser) => {
-    let isAlreadyInConvo = conversations.find(
-      (c) =>
-        c.participents[0]._id === convoUser._id ||
-        c.participents[1]._id === convoUser._id
-    );
-    if (isAlreadyInConvo) {
-      props.newConversation(isAlreadyInConvo);
-      setSelectConversation(isAlreadyInConvo);
-      return false;
+    if (convoUser !== null) {
+      let isAlreadyInConvo = conversations.find(
+        (c) =>
+          c.participents[0]._id === convoUser._id ||
+          c.participents[1]._id === convoUser._id
+      );
+      if (isAlreadyInConvo) {
+        props.newConversation(isAlreadyInConvo);
+        setSelectConversation(isAlreadyInConvo);
+        return false;
+      }
+      if (!convoUser.participents) {
+        props.newConversation(convoUser);
+        setNewConversationData(convoUser);
+        return false;
+      }
+      setSelectConversation(convoUser);
     }
-    if (!convoUser.participents) {
-      props.newConversation(convoUser);
-      setNewConversationData(convoUser);
-      return false;
-    }
-    setSelectConversation(convoUser);
     props.newConversation(convoUser);
   };
   const buddyContainerMaxH = window.outerHeight - 250;
